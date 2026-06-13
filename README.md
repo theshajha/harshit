@@ -5,7 +5,7 @@ A living workspace for becoming a software engineer in an AI-first world.
 There are two halves to this:
 
 - 📖 **The handbook** (`index.html`) — the *why* and *what*. Open it in a browser (or the live link once it's deployed). Read it once, front to back. It's the map.
-- 🛠️ **This repo** — the *how* and *do*. The tracks below are where you actually work, and where you tick things off as you go.
+- 🛠️ **This repo** — the *how* and *do*. The tracks below hold **curated notes in plain words** — the actual material, not just links — so you can learn and scan from here without chasing ten external sites. You work through them, fill in the "✍️ Your turn" sections as you go, and tick things off. The **Python track is the built-out model** for how every track will look.
 
 ---
 
@@ -47,9 +47,9 @@ This repo is your workbench — and you'll **learn Git by using it**:
 
 **[this-week.md](this-week.md)** — your concrete plan for the next 7 days. Begin there.
 
-## Every resource in one place
+## Going deeper
 
-**[resources.md](resources.md)** — every link, grouped by track. Don't tab-hop; for each track, pick the main resource and stick with it.
+The material lives **inside the tracks** (curated notes). **[resources.md](resources.md)** is just the "go deeper" shelf — the best external courses and references when you want more than the notes give. Don't tab-hop; the notes here cover the 80%.
 
 ---
 
