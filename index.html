@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Builder's Path — A Field Guide to Becoming an AI-First Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,500&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F0E6;
+    --paper-2:#EFE8D9;
+    --paper-3:#E9E0CD;
+    --ink:#221E1A;
+    --ink-soft:#4F463C;
+    --ink-faint:#8A7E6E;
+    --clay:#B24A2E;
+    --clay-deep:#8C3820;
+    --sage:#56644F;
+    --gold:#BC8728;
+    --line:#D9CEBA;
+    --line-soft:#E4DBC9;
+
+    --display:'Fraunces',Georgia,'Times New Roman',serif;
+    --body:'Spectral',Georgia,serif;
+    --mono:'JetBrains Mono','SFMono-Regular',Menlo,monospace;
+
+    --measure:40rem;
+  }
+
+  *{box-sizing:border-box;}
+  html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--body);
+    font-weight:400;
+    font-size:17px;
+    line-height:1.62;
+    letter-spacing:.002em;
+  }
+
+  /* paper grain */
+  body::before{
+    content:"";
+    position:fixed;inset:0;
+    pointer-events:none;z-index:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    mix-blend-mode:multiply;
+  }
+
+  .doc{position:relative;z-index:1;}
+
+  .page{
+    max-width:53rem;
+    margin:0 auto;
+    padding:6.5rem 4rem;
+  }
+
+  /* ---------- type ---------- */
+  h1,h2,h3,h4{font-family:var(--display);font-weight:600;color:var(--ink);margin:0;line-height:1.08;}
+  p{margin:0 0 1.1rem;max-width:var(--measure);}
+  a{color:var(--clay-deep);}
+  strong{font-weight:600;color:var(--ink);}
+  em{font-style:italic;}
+  code{font-family:var(--mono);font-size:.86em;background:var(--paper-3);padding:.08em .35em;border-radius:3px;color:var(--clay-deep);}
+
+  .kicker{
+    font-family:var(--mono);
+    font-size:.7rem;
+    font-weight:500;
+    letter-spacing:.34em;
+    text-transform:uppercase;
+    color:var(--clay);
+    display:flex;align-items:center;gap:.85rem;
+    margin-bottom:1.6rem;
+  }
+  .kicker::before{content:"";width:2.2rem;height:1px;background:var(--clay);display:inline-block;}
+
+  .lead{
+    font-size:1.32rem;
+    line-height:1.5;
+    color:var(--ink-soft);
+    font-weight:300;
+    max-width:38rem;
+  }
+  .lead em{color:var(--clay-deep);font-style:italic;}
+
+  .small{font-size:.96rem;color:var(--ink-soft);}
+  .faint{color:var(--ink-faint);}
+
+  /* ---------- cover ---------- */
+  .cover{
+    min-height:100vh;
+    display:flex;flex-direction:column;justify-content:space-between;
+    padding:5rem 4rem 4rem;
+    max-width:60rem;margin:0 auto;
+    border-bottom:1px solid var(--line);
+  }
+  .cover-top{display:flex;justify-content:space-between;align-items:flex-start;font-family:var(--mono);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-faint);}
+  .cover-mid{padding:1rem 0;}
+  .cover-eyebrow{
+    font-family:var(--mono);font-size:.78rem;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--clay);margin-bottom:2.2rem;
+  }
+  .cover h1{
+    font-size:clamp(3.4rem,9vw,7.2rem);
+    font-weight:600;
+    letter-spacing:-.02em;
+    line-height:.94;
+    font-optical-sizing:auto;
+  }
+  .cover h1 em{font-style:italic;font-weight:500;color:var(--clay);}
+  .cover .sub{
+    font-family:var(--display);
+    font-size:clamp(1.2rem,2.4vw,1.7rem);
+    font-weight:400;font-style:italic;
+    color:var(--ink-soft);
+    margin-top:1.6rem;max-width:34rem;line-height:1.3;
+  }
+  .cover .standfirst{
+    margin-top:2.4rem;max-width:33rem;font-size:1.05rem;color:var(--ink-soft);
+  }
+  .cover-meta{
+    display:grid;grid-template-columns:repeat(3,auto);gap:2.5rem;
+    border-top:1px solid var(--line);padding-top:1.6rem;
+    font-family:var(--mono);font-size:.74rem;letter-spacing:.05em;
+  }
+  .cover-meta .lbl{text-transform:uppercase;letter-spacing:.2em;color:var(--ink-faint);font-size:.64rem;margin-bottom:.45rem;}
+  .cover-meta .val{color:var(--ink);font-size:.92rem;font-family:var(--body);letter-spacing:0;}
+
+  /* ---------- contents ---------- */
+  .toc{border-top:1px solid var(--line);}
+  .toc ol{list-style:none;margin:2rem 0 0;padding:0;counter-reset:toc -1;}
+  .toc li{
+    counter-increment:toc;
+    display:flex;align-items:baseline;gap:1.4rem;
+    padding:.85rem 0;border-bottom:1px solid var(--line-soft);
+  }
+  .toc li::before{
+    content:counter(toc,decimal-leading-zero);
+    font-family:var(--mono);font-size:.8rem;color:var(--clay);min-width:2.2rem;letter-spacing:.05em;
+  }
+  .toc .t{font-family:var(--display);font-size:1.25rem;font-weight:500;}
+  .toc .d{margin-left:auto;font-size:.92rem;color:var(--ink-faint);text-align:right;max-width:18rem;}
+
+  /* ---------- section ---------- */
+  .section{border-top:1px solid var(--line);}
+  .sec-head{display:flex;gap:1.6rem;align-items:flex-start;margin-bottom:2.6rem;}
+  .sec-num{
+    font-family:var(--display);font-weight:600;font-size:3.4rem;line-height:.8;
+    color:var(--paper);
+    -webkit-text-stroke:1.4px var(--clay);
+    flex-shrink:0;
+  }
+  .sec-title h2{font-size:2.5rem;font-weight:600;letter-spacing:-.015em;line-height:1.02;}
+  .sec-title .sub{font-family:var(--body);font-style:italic;color:var(--ink-soft);font-size:1.1rem;margin-top:.5rem;}
+
+  /* pull quote */
+  .pull{
+    font-family:var(--display);
+    font-weight:500;font-style:italic;
+    font-size:clamp(1.7rem,3.6vw,2.5rem);
+    line-height:1.22;letter-spacing:-.01em;
+    color:var(--ink);
+    border-left:3px solid var(--clay);
+    padding:.4rem 0 .4rem 1.8rem;
+    margin:2.4rem 0;max-width:36rem;
+  }
+  .pull span{color:var(--clay);}
+
+  /* callout */
+  .callout{
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    border-left:3px solid var(--clay);
+    padding:1.5rem 1.7rem;
+    margin:1.8rem 0;
+    border-radius:2px;
+    max-width:var(--measure);
+  }
+  .callout .ctag{
+    font-family:var(--mono);font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;
+    color:var(--clay);margin-bottom:.7rem;display:block;
+  }
+  .callout p:last-child{margin-bottom:0;}
+  .callout.sage{border-left-color:var(--sage);}
+  .callout.sage .ctag{color:var(--sage);}
+  .callout.gold{border-left-color:var(--gold);}
+  .callout.gold .ctag{color:var(--gold);}
+
+  /* two-col comparison */
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin:2rem 0;}
+  .col{border:1px solid var(--line);border-radius:3px;padding:1.4rem 1.5rem;background:var(--paper-2);}
+  .col h4{font-family:var(--mono);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;font-weight:500;margin-bottom:1.1rem;padding-bottom:.7rem;border-bottom:1px solid var(--line);}
+  .col.fade h4{color:var(--ink-faint);}
+  .col.last h4{color:var(--clay);}
+  .col ul{list-style:none;margin:0;padding:0;}
+  .col li{font-size:.96rem;padding:.5rem 0;display:flex;gap:.65rem;line-height:1.4;border-bottom:1px solid var(--line-soft);}
+  .col li:last-child{border-bottom:none;}
+  .col li::before{font-family:var(--mono);font-size:.85rem;flex-shrink:0;}
+  .col.fade li{color:var(--ink-soft);}
+  .col.fade li::before{content:"–";color:var(--ink-faint);}
+  .col.last li::before{content:"+";color:var(--clay);font-weight:700;}
+
+  /* pillars */
+  .pillar{display:flex;gap:1.5rem;padding:1.7rem 0;border-bottom:1px solid var(--line-soft);max-width:var(--measure);}
+  .pillar:last-child{border-bottom:none;}
+  .pillar .pn{font-family:var(--display);font-size:1.5rem;font-weight:600;color:var(--clay);flex-shrink:0;width:2.2rem;line-height:1.2;}
+  .pillar h3{font-size:1.4rem;font-weight:600;margin-bottom:.4rem;}
+  .pillar p{margin-bottom:.4rem;font-size:1.02rem;}
+  .pillar .tagrow{margin-top:.7rem;}
+  .tag{display:inline-block;font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--sage);border:1px solid var(--line);border-radius:99px;padding:.2rem .65rem;margin:0 .4rem .4rem 0;}
+  .tag.hot{color:var(--clay);border-color:var(--clay);}
+
+  /* command reference */
+  .cmds{margin:1.6rem 0;max-width:var(--measure);}
+  .cmd-group{margin-bottom:1.5rem;}
+  .cmd-group > h4{font-family:var(--mono);font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--clay);margin-bottom:.4rem;padding-bottom:.5rem;border-bottom:1px solid var(--line);}
+  .cmd-group .gd{font-size:.92rem;color:var(--ink-faint);font-style:italic;margin:.55rem 0 .9rem;}
+  .cmd{display:grid;grid-template-columns:14.5rem 1fr;gap:1rem;padding:.5rem 0;border-bottom:1px solid var(--line-soft);align-items:baseline;}
+  .cmd:last-child{border-bottom:none;}
+  .cmd code{font-size:.82rem;white-space:nowrap;color:var(--clay-deep);background:var(--paper-3);padding:.18rem .5rem;border-radius:3px;}
+  .cmd .cmd-d{font-size:.95rem;color:var(--ink-soft);line-height:1.4;}
+
+  /* tools / student offers */
+  .tool-cat{margin:2.2rem 0 .2rem;font-family:var(--mono);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--sage);display:flex;align-items:center;gap:.8rem;max-width:var(--measure);}
+  .tool-cat::after{content:"";flex:1;height:1px;background:var(--line);}
+  .tool{padding:1rem 0;border-bottom:1px solid var(--line-soft);max-width:var(--measure);}
+  .tool-h{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap;margin-bottom:.4rem;}
+  .tool-n{font-family:var(--display);font-size:1.18rem;font-weight:600;}
+  .tool-badge{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--clay);border:1px solid var(--clay);border-radius:99px;padding:.12rem .55rem;white-space:nowrap;}
+  .tool-badge.free{color:var(--sage);border-color:var(--sage);}
+  .tool-w{font-size:.98rem;margin:0 0 .3rem;}
+  .tool-s{font-size:.9rem;color:var(--ink-soft);margin:0;line-height:1.45;}
+  .tool-s + .tool-s{margin-top:.3rem;}
+  .tool-s .u{font-family:var(--mono);font-size:.8rem;color:var(--clay-deep);word-break:break-word;}
+
+  /* timeline */
+  .timeline{position:relative;margin:2.4rem 0 1rem;padding-left:2.2rem;}
+  .timeline::before{content:"";position:absolute;left:6px;top:.4rem;bottom:.4rem;width:2px;background:var(--line);}
+  .tl{position:relative;padding:0 0 2.2rem;max-width:var(--measure);}
+  .tl:last-child{padding-bottom:0;}
+  .tl::before{
+    content:"";position:absolute;left:-2.2rem;top:.35rem;
+    width:14px;height:14px;border-radius:50%;
+    background:var(--paper);border:2.5px solid var(--clay);
+  }
+  .tl.now::before{background:var(--clay);box-shadow:0 0 0 4px rgba(178,74,46,.16);}
+  .tl .when{
+    font-family:var(--mono);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--clay);margin-bottom:.35rem;display:flex;align-items:center;gap:.6rem;
+  }
+  .tl .nowtag{background:var(--clay);color:var(--paper);padding:.1rem .5rem;border-radius:99px;font-size:.6rem;letter-spacing:.12em;}
+  .tl h3{font-size:1.45rem;font-weight:600;margin-bottom:.5rem;}
+  .tl ul{margin:.5rem 0 0;padding-left:1.1rem;}
+  .tl li{margin-bottom:.4rem;padding-left:.2rem;font-size:1.0rem;}
+  .tl li::marker{color:var(--clay);}
+
+  /* checklist */
+  .checklist{list-style:none;margin:1.6rem 0;padding:0;max-width:var(--measure);counter-reset:ck;}
+  .checklist li{counter-increment:ck;display:flex;gap:1rem;padding:.95rem 0;border-bottom:1px solid var(--line-soft);align-items:baseline;}
+  .checklist li::before{content:"";width:1.05rem;height:1.05rem;border:1.5px solid var(--clay);border-radius:3px;flex-shrink:0;position:relative;top:.18rem;}
+  .checklist .ct{font-weight:500;}
+  .checklist .cd{color:var(--ink-soft);font-size:.95rem;}
+
+  /* footnote */
+  .footnote{
+    margin-top:2rem;padding:1.5rem 1.7rem;
+    background:var(--paper-3);border-radius:3px;
+    font-size:.88rem;color:var(--ink-soft);line-height:1.55;max-width:var(--measure);
+  }
+  .footnote h4{font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:.8rem;}
+
+  .closing .sig{font-family:var(--display);font-style:italic;font-size:1.3rem;color:var(--clay-deep);margin-top:2rem;}
+
+  .endmark{display:flex;justify-content:center;margin:3rem 0 1rem;color:var(--clay);font-family:var(--display);letter-spacing:.5em;font-size:1.1rem;}
+
+  /* entrance animation — screen only */
+  @media screen and (prefers-reduced-motion:no-preference){
+    .cover .anim{opacity:0;transform:translateY(14px);animation:rise .9s cubic-bezier(.2,.7,.3,1) forwards;}
+    .cover .a1{animation-delay:.05s}.cover .a2{animation-delay:.18s}.cover .a3{animation-delay:.32s}.cover .a4{animation-delay:.46s}.cover .a5{animation-delay:.6s}
+    @keyframes rise{to{opacity:1;transform:none;}}
+  }
+
+  /* ---------- print / PDF ---------- */
+  @media print{
+    @page{size:A4;margin:18mm 16mm;}
+    html,body{background:#fff;font-size:11.2pt;}
+    body::before{display:none;}
+    .page{max-width:none;margin:0;padding:0;}
+    .cover{min-height:auto;padding:0 0 8mm;border-bottom:1px solid var(--line);max-width:none;}
+    .cover h1{font-size:46pt;}
+    .section,.toc-page,.cover{break-before:page;}
+    .cover{break-before:avoid;}
+    .toc-page{break-before:page;}
+    .callout,.col,.pillar,.tl,.compare,.footnote,.checklist li,.pull,.cmd-group,.tool{break-inside:avoid;}
+    .sec-head{break-after:avoid;}
+    a{color:var(--ink);}
+  }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <!-- ===================== COVER ===================== -->
+  <header class="cover">
+    <div class="cover-top">
+      <span>The Builder's Path</span>
+      <span>Field Guide · v1</span>
+    </div>
+
+    <div class="cover-mid">
+      <div class="cover-eyebrow anim a1">What's worth learning for an AI-first software career</div>
+      <h1 class="anim a2">The<br>Builder's <em>Path</em></h1>
+      <div class="sub anim a3">How to spend three undergraduate years learning the things that will still matter when you graduate — and skipping the things that won't.</div>
+      <p class="standfirst anim a4">Most of what made a junior developer hireable is becoming free. This guide is about the part that isn't: judgment, depth, and the ability to build real things and stand behind them.</p>
+    </div>
+
+    <div class="cover-meta anim a5">
+      <div>
+        <div class="lbl">Prepared for</div>
+        <div class="val">Harshit Jha<br><span class="faint" style="font-size:.78rem">CSE · MIT Manipal · Class of 2029</span></div>
+      </div>
+      <div>
+        <div class="lbl">From</div>
+        <div class="val">Shashank<br><span class="faint" style="font-size:.78rem">your cousin</span></div>
+      </div>
+      <div>
+        <div class="lbl">Shelf life</div>
+        <div class="val">v1 · 2026<br><span class="faint" style="font-size:.78rem">ideas last, details don't</span></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== CONTENTS ===================== -->
+  <section class="page toc-page">
+    <div class="kicker">Contents</div>
+    <h2 style="font-size:2rem;margin-bottom:.5rem;">What's inside</h2>
+    <p class="small faint" style="max-width:34rem;">Read it front to back once, then keep it open to whichever section matches the year you're in.</p>
+    <nav class="toc">
+      <ol>
+        <li><span class="t">How to use this</span><span class="d">Two minutes before you start</span></li>
+        <li><span class="t">The one big idea</span><span class="d">What AI does and doesn't take</span></li>
+        <li><span class="t">What's worth learning</span><span class="d">Where to put your hours</span></li>
+        <li><span class="t">The five pillars</span><span class="d">Your actual curriculum</span></li>
+        <li><span class="t">Git &amp; GitHub, hands-on</span><span class="d">The commands, as a refresher</span></li>
+        <li><span class="t">Free for students</span><span class="d">Tools to claim while you can</span></li>
+        <li><span class="t">The three-year arc</span><span class="d">Term by term to 2029</span></li>
+        <li><span class="t">Habits that keep you sharp</span><span class="d">Using AI without going soft</span></li>
+        <li><span class="t">Your first week</span><span class="d">Start tomorrow</span></li>
+      </ol>
+    </nav>
+  </section>
+
+  <!-- ===================== 00 HOW TO USE ===================== -->
+  <section class="page section">
+    <div class="sec-head">
+      <div class="sec-num">00</div>
+      <div class="sec-title"><h2>How to use this</h2><div class="sub">Two minutes before you start.</div></div>
+    </div>
+    <p>Harshit — this isn't a syllabus to finish or a checklist to feel guilty about. It's a <strong>direction</strong>: the most useful thing in here is the <em>shape</em> of the next three years — what to front-load, what to ignore, what to keep returning to. Three ground rules:</p>
+    <div class="callout">
+      <span class="ctag">How to read it</span>
+      <p><strong>1. Trust the arrows, not the specifics.</strong> Tool names (today it's Cursor, Claude Code, this-or-that database) will be outdated by the time you graduate. The <em>categories</em> — fundamentals, building, AI fluency, judgment — won't be. When a tool name looks old, replace it; keep the idea.</p>
+      <p><strong>2. Build &gt; consume.</strong> A finished, deployed, slightly-broken project teaches more than ten perfect tutorials. Bias every week toward shipping something small.</p>
+      <p><strong>3. It's about how to <em>train</em>, not where the jobs will be.</strong> The field moves too fast to predict the 2029 market — so this guide spends its pages on the durable skills that make you a good engineer in an AI world, and leaves the hiring forecasts for when they're close enough to matter.</p>
+    </div>
+  </section>
+
+  <!-- ===================== 01 BIG IDEA ===================== -->
+  <section class="page section">
+    <div class="sec-head">
+      <div class="sec-num">01</div>
+      <div class="sec-title"><h2>The one big idea</h2><div class="sub">If you forget everything else, keep this.</div></div>
+    </div>
+
+    <div class="pull">AI commoditizes <span>typing code.</span> It does not commoditize <span>judgment.</span></div>
+
+    <p>For decades, "can you write working code" was the bar to clear to get hired. AI tools now clear that bar for almost anyone. That sounds like bad news, and for some people it is — but only for the ones whose entire value was producing code.</p>
+    <p>Here's the uncomfortable, useful truth: <strong>AI didn't replace the junior developer — it exposed the junior who never learned the fundamentals.</strong> In one controlled study, students who used AI to <em>generate code</em> scored under 40% on understanding it later; students who used the same AI to <em>explain concepts to them</em> scored 65%+. Same tool. Opposite outcomes. The difference was whether they were building a brain or renting one.</p>
+
+    <div class="callout sage">
+      <span class="ctag">The goal, in one line</span>
+      <p>Become the engineer who <strong>supervises the AI</strong> — who can tell when its output is wrong, debug it, design the system around it, and decide what's worth building — not the one the AI supervises. Everything else in this guide exists to build that one thing AI can't hand you: <em>earned judgment.</em></p>
+    </div>
+  </section>
+
+  <!-- ===================== 02 WORTH LEARNING ===================== -->
+  <section class="page section">
+    <div class="sec-head">
+      <div class="sec-num">02</div>
+      <div class="sec-title"><h2>What's worth learning</h2><div class="sub">Where to actually spend your hours.</div></div>
+    </div>
+
+    <p>Not all skills age at the same rate. Spend your hours on the right-hand column — the left isn't <em>useless</em>, it's just no longer where your <em>advantage</em> comes from, because AI does it for free now.</p>
+
+    <div class="compare">
+      <div class="col fade">
+        <h4>Becoming commoditized</h4>
+        <ul>
+          <li>Boilerplate &amp; tutorial-level coding</li>
+          <li>Memorized algorithm patterns</li>
+          <li>Rote syntax recall</li>
+          <li>"I can build a basic CRUD app"</li>
+          <li>Résumé keywords &amp; certificates</li>
+        </ul>
+      </div>
+      <div class="col last">
+        <h4>Staying — or rising — in value</h4>
+        <ul>
+          <li>Deep CS: OS, networks, databases, concurrency</li>
+          <li>Judgment on failure modes &amp; edge cases</li>
+          <li>System design — architecting things that scale</li>
+          <li>Debugging &amp; reading code you didn't write</li>
+          <li>AI-systems literacy (RAG, agents, vector search)</li>
+          <li>Communication &amp; framing the right problem</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout sage">
+      <span class="ctag">The 70 / 30 rule</span>
+      <p>AI reliably handles about <strong>70% of routine coding</strong> — boilerplate, common functions, first drafts. The final <strong>30%</strong> — complex requirements, edge cases, correctness, the things that actually break in production — still needs a human. In practice, AI-written code often carries <em>more</em> subtle logic errors, so most developers now spend more time reviewing and debugging it, not less. <strong>Being excellent at that 30% is the whole game.</strong> Aim your learning there.</p>
+    </div>
+  </section>
+
+  <!-- ===================== 03 PILLARS ===================== -->
+  <section class="page section">
+    <div class="sec-head">
+      <div class="sec-num">03</div>
+      <div class="sec-title"><h2>The five pillars</h2><div class="sub">Your real curriculum — the one a CGPA won't capture.</div></div>
+    </div>
+
+    <p>Your instinct — Python, Git, problem-solving, web dev — is the <em>right skeleton</em>. Keep it. These five pillars are that skeleton, corrected and extended for the AI era. The order matters.</p>
+
+    <div class="pillar">
+      <div class="pn">1</div>
+      <div>
+        <h3>Fundamentals — deep, not surface</h3>
+        <p>Real fluency in one language (Python is a fine start), <em>plus</em> the CS that AI can't fake for you: operating systems, networking, databases, how a computer actually runs your code. This is the difference between shipping fragile AI-generated code and knowing when it's wrong. Front-load this; it compounds for a decade.</p>
+        <div class="tagrow"><span class="tag">python</span><span class="tag">os · networks · dbms</span><span class="tag">front-load</span></div>
+      </div>
+    </div>
+
+    <div class="pillar">
+      <div class="pn">2</div>
+      <div>
+        <h3>Build real things — deployed, in public</h3>
+        <p>Your strength and your edge. Progressively bigger projects, actually <em>deployed</em> (not just running on localhost), living on a public GitHub. A builder's portfolio of working software beats a résumé every time.</p>
+        <div class="callout" style="margin:.9rem 0 .6rem;">
+          <span class="ctag">Two rules to lock in early</span>
+          <p><strong>Git on every project, from day one.</strong> Even throwaway scripts. Make commit-and-push a reflex, not a chore you relearn each time. (Section 04 is your refresher.)</p>
+          <p style="margin-top:.7rem;"><strong>Project zero: your own portfolio website.</strong> Start static (v1) to nail the build–deploy–Git loop — then grow it into something dynamic (v2): a blog you write in, or an AI chatbot trained on your own projects. Let the portfolio itself become your testing ground.</p>
+        </div>
+        <div class="tagrow"><span class="tag">git everywhere</span><span class="tag">deploy it</span><span class="tag">public github</span></div>
+      </div>
+    </div>
+
+    <div class="pillar">
+      <div class="pn">3</div>
+      <div>
+        <h3>DSA &amp; problem-solving — reframed, not dropped</h3>
+        <p>Don't drop it, don't obsess over it. Memorized grinding is losing value — interviewers know it can be gamed. But algorithms-from-scratch still trains the clear thinking AI can't supply, and most strong engineering interviews still test it. <strong>The method: build features <em>with</em> AI while understanding every line, then periodically turn the AI off and write the key algorithms by hand.</strong></p>
+        <div class="tagrow"><span class="tag">thinking, not memorizing</span><span class="tag">interview-ready</span></div>
+      </div>
+    </div>
+
+    <div class="pillar">
+      <div class="pn">4</div>
+      <div>
+        <h3>AI-systems literacy — the new pillar</h3>
+        <p>This is the <strong>highest-leverage skill on the whole list</strong> — and the one most of your peers will skip. Not "use ChatGPT" — actually understanding how to <em>build with</em> models: prompting and verifying output, retrieval (RAG), embeddings, vector databases, and agents / tool-calling. Going genuinely deep here, while everyone else stays at the surface, is your clearest edge.</p>
+        <div class="tagrow"><span class="tag hot">highest leverage</span><span class="tag">rag · embeddings</span><span class="tag">agents</span></div>
+      </div>
+    </div>
+
+    <div class="pillar">
+      <div class="pn">5</div>
+      <div>
+        <h3>The durable human "30%"</h3>
+        <p>System design, writing good tests, methodical debugging, and plain communication. Employers increasingly rank problem-solving and communication <em>above</em> raw AI skills. Treat AI output the way you'd treat a teammate's pull request: useful, fast, and to be reviewed before you trust it.</p>
+        <div class="tagrow"><span class="tag">system design</span><span class="tag">testing</span><span class="tag">communication</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 04 GIT & GITHUB ===================== -->
+  <section class="page section">
+    <div class="sec-head">
+      <div class="sec-num">04</div>
+      <div class="sec-title"><h2>Git &amp; GitHub, hands-on</h2><div class="sub">The ten commands you'll use 95% of the time.</div></div>
+    </div>
+
+    <p><strong>Git</strong> saves your work in snapshots; <strong>GitHub</strong> is where those snapshots live so the world — and future-you — can see them. It feels fiddly for about a week, then becomes invisible. Don't memorize the list below; just keep it nearby until your hands know it.</p>
+
+    <div class="callout sage">
+      <span class="ctag">The mental model</span>
+      <p>Your project lives in two places: the <strong>local repo</strong> on your laptop and the <strong>remote</strong> on GitHub. You <code>commit</code> to save a snapshot locally, <code>push</code> to send it up to GitHub, and <code>pull</code> to bring down anything new. That loop — <em>change → add → commit → push</em> — is 90% of Git.</p>
+    </div>
+
+    <div class="cmds">
+
+      <div class="cmd-group">
+        <h4>Setup — once per machine / project</h4>
+        <div class="cmd"><code>git config --global user.name "…"</code><span class="cmd-d">Tell Git who you are (stamped on every commit). Do the same with <code>user.email</code>.</span></div>
+        <div class="cmd"><code>git init</code><span class="cmd-d">Start tracking the current folder as a new Git project.</span></div>
+        <div class="cmd"><code>git clone &lt;url&gt;</code><span class="cmd-d">Copy an existing GitHub repo down to your machine.</span></div>
+      </div>
+
+      <div class="cmd-group">
+        <h4>The daily loop — you'll run these constantly</h4>
+        <div class="cmd"><code>git status</code><span class="cmd-d">What's changed, what's staged, what's not. Run it often — it's your compass.</span></div>
+        <div class="cmd"><code>git add &lt;file&gt;</code> / <code>git add .</code><span class="cmd-d">Stage changes for the next snapshot (<code>.</code> means everything).</span></div>
+        <div class="cmd"><code>git commit -m "message"</code><span class="cmd-d">Save a snapshot of staged changes, with a note on what you did.</span></div>
+        <div class="cmd"><code>git push</code><span class="cmd-d">Send your commits up to GitHub.</span></div>
+        <div class="cmd"><code>git pull</code><span class="cmd-d">Bring down commits made elsewhere (a teammate, or your other laptop).</span></div>
+        <div class="cmd"><code>git log --oneline</code><span class="cmd-d">A compact history of every commit — your project's story.</span></div>
+      </div>
+
+      <div class="cmd-group">
+        <h4>Branching — for trying things safely &amp; collaborating</h4>
+        <p class="gd">A branch is a parallel copy where you can experiment without breaking the working version.</p>
+        <div class="cmd"><code>git switch -c &lt;name&gt;</code><span class="cmd-d">Create a new branch and move onto it.</span></div>
+        <div class="cmd"><code>git switch &lt;name&gt;</code><span class="cmd-d">Hop between existing branches.</span></div>
+        <div class="cmd"><code>git merge &lt;name&gt;</code><span class="cmd-d">Pull another branch's work into the one you're on.</span></div>
+      </div>
+
+      <div class="cmd-group">
+        <h4>Undo — the "phew" commands</h4>
+        <div class="cmd"><code>git diff</code><span class="cmd-d">See exactly what you changed, line by line, before committing.</span></div>
+        <div class="cmd"><code>git restore &lt;file&gt;</code><span class="cmd-d">Throw away local changes to a file (back to last commit).</span></div>
+        <div class="cmd"><code>git restore --staged &lt;file&gt;</code><span class="cmd-d">Unstage a file you added by mistake.</span></div>
+        <div class="cmd"><code>git revert &lt;commit&gt;</code><span class="cmd-d">Safely undo an already-pushed commit by adding an opposite one.</span></div>
+      </div>
+
+    </div>
+
+    <div class="callout">
+      <span class="ctag">The GitHub layer — beyond your own repo</span>
+      <p>A few words you'll meet the moment you touch someone else's code: a <strong>fork</strong> is your own copy of another person's repo. A <strong>pull request (PR)</strong> proposes your changes back to them and opens them for review — this is the heartbeat of open source and of every real team. <strong>Issues</strong> track bugs and tasks. Getting comfortable opening a small PR to an open-source project is one of the best signals you can build.</p>
+    </div>
+
+    <div class="callout gold">
+      <span class="ctag">What a good commit looks like</span>
+      <p>Small and frequent beats huge and rare. Write messages that finish the sentence <em>"This commit will…"</em> — so <code>git commit -m "add dark-mode toggle"</code>, not <code>"stuff"</code> or <code>"final final v2"</code>. Future-you, reading the history at 2 a.m., will thank you.</p>
+    </div>
+  </section>
+
+  <!-- ===================== 05 FREE FOR STUDENTS ===================== -->
+  <section class="page section">
+    <div class="sec-head">
+      <div class="sec-num">05</div>
+      <div class="sec-title"><h2>Free for students</h2><div class="sub">A temporary superpower — claim it while you can.</div></div>
+    </div>
+
+    <p>Right now, just by being enrolled, you can get a stack of professional, paid tools for free — easily worth a few hundred dollars a year. Most students never claim them. Here's what an Indian student can actually get today, and exactly how.</p>
+
+    <div class="callout gold">
+      <span class="ctag">Read this first</span>
+      <p>These offers change fast — free tiers shrink, promos end, links move. This list is accurate as of <strong>mid-2026</strong>; always confirm on the live page before counting on it. Where an offer just ended, I've said so — so you don't waste an afternoon chasing a dead link.</p>
+    </div>
+
+    <div class="callout sage">
+      <span class="ctag">The one trick that unlocks the rest</span>
+      <p>Your <code>@learner.manipal.edu</code> address is a real <code>.edu</code> email — that's the magic key for most of these. If a tool doesn't recognize it, document proof works too (student ID, bonafide certificate, or fee receipt with your name, college, and a current date). Verify once for the <strong>GitHub Student Developer Pack</strong> below, and it unlocks many of the others.</p>
+    </div>
+
+    <div class="tool-cat">The master key</div>
+    <div class="tool">
+      <div class="tool-h"><span class="tool-n">GitHub Student Developer Pack</span><span class="tool-badge">start here</span></div>
+      <p class="tool-w"><strong>What you get:</strong> one verification unlocks ~80 offers — including <strong>DigitalOcean $200</strong>, <strong>MongoDB $50</strong>, <strong>Azure $100</strong>, free JetBrains IDEs, Notion, a free <code>.me</code> domain, and much more.</p>
+      <p class="tool-s"><strong>How:</strong> sign in to GitHub → verify as a student with your college email <em>or</em> a document upload. <span class="u">education.github.com/pack</span></p>
+      <p class="tool-s" style="color:var(--gold);"><strong>Heads-up:</strong> free <em>Copilot Pro</em> for students is real but new sign-ups are <strong>paused</strong> (since ~Apr 2026, no end date). The rest of the pack is unaffected — and Copilot Free (below) covers you meanwhile.</p>
+    </div>
+
+    <div class="tool-cat">AI you can talk to &amp; build with</div>
+    <div class="tool">
+      <div class="tool-h"><span class="tool-n">ChatGPT Go</span><span class="tool-badge free">free · 12 months</span></div>
+      <p class="tool-w"><strong>What you get:</strong> ChatGPT Go (GPT-5 access, higher limits, image generation) <strong>free for 12 months</strong> — an India-wide promo, not even student-gated.</p>
+      <p class="tool-s"><strong>How:</strong> open ChatGPT in India → Settings → Subscription → find the "Free for 12 Months" banner. A UPI/card is required on file, but you're not charged. <span class="u">chatgpt.com</span></p>
+    </div>
+    <div class="tool">
+      <div class="tool-h"><span class="tool-n">Claude</span><span class="tool-badge free">free tier</span></div>
+      <p class="tool-w"><strong>What you get:</strong> a genuinely useful free tier (Sonnet + Haiku, web search, file uploads, Projects). For builders, you can also apply for <strong>~$50 in API credits</strong> for a student project.</p>
+      <p class="tool-s"><strong>How:</strong> just sign up. <span class="u">claude.ai</span> · (There's no individual discount on Claude Pro — the free tier is the play.)</p>
+    </div>
+
+    <div class="tool-cat">AI in your editor</div>
+    <div class="tool">
+      <div class="tool-h"><span class="tool-n">GitHub Copilot — Free tier</span><span class="tool-badge free">free</span></div>
+      <p class="tool-w"><strong>What you get:</strong> 2,000 code completions + 50 chat messages a month, free, no card. The realistic Copilot route right now, while student Pro is paused.</p>
+      <p class="tool-s"><strong>How:</strong> install the Copilot extension in VS Code → "Sign up for Copilot Free." <span class="u">github.com/features/copilot/plans</span></p>
+    </div>
+    <div class="tool">
+      <div class="tool-h"><span class="tool-n">Cursor</span><span class="tool-badge">worth a try</span></div>
+      <p class="tool-w"><strong>What you get:</strong> one year of <strong>Cursor Pro free</strong> for students.</p>
+      <p class="tool-s"><strong>How:</strong> verify at <span class="u">cursor.com/students</span> with your <code>@learner.manipal.edu</code> email. <em>Caveat:</em> the official policy says North-America-only, but Indian students often get through with the <code>.edu</code> address or via the GitHub Pack link. Not guaranteed — worth a shot.</p>
+    </div>
+    <div class="tool">
+      <div class="tool-h"><span class="tool-n">Google Gemini Code Assist</span><span class="tool-badge free">free</span></div>
+      <p class="tool-w"><strong>What you get:</strong> a very generous free individual tier (thousands of completions a day) in VS Code &amp; JetBrains. Not student-gated.</p>
+      <p class="tool-s"><strong>How:</strong> install the extension, sign in with a Google account. <em>Note:</em> Google is folding this into "Antigravity" — confirm current quotas. <span class="u">developers.google.com/gemini-code-assist</span></p>
+    </div>
+
+    <div class="tool-cat">Pro tools, yours for free</div>
+    <div class="tool">
+      <div class="tool-h"><span class="tool-n">JetBrains IDEs</span><span class="tool-badge free">free</span></div>
+      <p class="tool-w"><strong>What you get:</strong> every JetBrains IDE free — IntelliJ IDEA Ultimate, PyCharm Professional, WebStorm, CLion and more (full pro editions). Basic AI is bundled into recent versions.</p>
+      <p class="tool-s"><strong>How:</strong> apply with your college email, an ISIC card, or your GitHub Student Pack. <span class="u">jetbrains.com/academy/student-pack</span></p>
+    </div>
+    <div class="tool">
+      <div class="tool-h"><span class="tool-n">Figma</span><span class="tool-badge free">free pro</span></div>
+      <p class="tool-w"><strong>What you get:</strong> the Professional plan free — for UI design, your portfolio, and diagrams.</p>
+      <p class="tool-s"><strong>How:</strong> create an account → verify student status. <span class="u">figma.com/education</span></p>
+    </div>
+    <div class="tool">
+      <div class="tool-h"><span class="tool-n">Notion</span><span class="tool-badge free">free plus</span></div>
+      <p class="tool-w"><strong>What you get:</strong> the Plus plan free (notes, docs, project tracking). Notion AI is a separate add-on — 50% off for students, not free.</p>
+      <p class="tool-s"><strong>How:</strong> sign in with your school email → Settings → "Get free education plan." <span class="u">notion.com/help/notion-for-education</span></p>
+    </div>
+
+    <div class="tool-cat">Cloud &amp; hosting — deploy for free</div>
+    <div class="tool">
+      <div class="tool-h"><span class="tool-n">Microsoft Azure for Students</span><span class="tool-badge free">$100 · no card</span></div>
+      <p class="tool-w"><strong>What you get:</strong> $100 of credit (renewed yearly while you're a student), 25+ free services, and <strong>no credit card needed</strong>.</p>
+      <p class="tool-s"><strong>How:</strong> sign in with your college email → academic verification. <span class="u">azure.microsoft.com/free/students</span></p>
+    </div>
+    <div class="tool">
+      <div class="tool-h"><span class="tool-n">Vercel &amp; Netlify</span><span class="tool-badge free">free forever</span></div>
+      <p class="tool-w"><strong>What you get:</strong> deploy your portfolio and web apps live, free, indefinitely (personal projects). This is how your projects get a public URL.</p>
+      <p class="tool-s"><strong>How:</strong> sign up with GitHub → import your repo → deploy. <span class="u">vercel.com</span> · <span class="u">netlify.com</span></p>
+    </div>
+    <div class="tool">
+      <div class="tool-h"><span class="tool-n">MongoDB Atlas &amp; Hugging Face</span><span class="tool-badge free">free tiers</span></div>
+      <p class="tool-w"><strong>What you get:</strong> a free-forever Mongo database (M0, 512&nbsp;MB) for your apps; and Hugging Face's free models, datasets, and Spaces to host ML demos.</p>
+      <p class="tool-s"><strong>How:</strong> sign up, no card. <span class="u">mongodb.com</span> · <span class="u">huggingface.co</span> · (AWS &amp; Google Cloud also give new-user credits — $100–$300 — when you need more.)</p>
+    </div>
+
+    <div class="callout">
+      <span class="ctag">Don't bother — these recently ended</span>
+      <p>So you don't chase dead offers: <strong>Perplexity Pro</strong>'s free-year routes (Airtel, US campus) have closed — it's a paid student discount now. <strong>Google's free year of Gemini / AI Pro for students</strong> expired in 2025 (only a 1-month trial remains). <strong>Tabnine</strong> dropped its free tier, and <strong>Amazon Q Developer</strong> closed new free sign-ups. Skip these and spend the time building.</p>
+    </div>
+  </section>
+
+  <!-- ===================== 06 ARC ===================== -->
+  <section class="page section">
+    <div class="sec-head">
+      <div class="sec-num">06</div>
+      <div class="sec-title"><h2>The three-year arc</h2><div class="sub">Term by term, now to 2029.</div></div>
+    </div>
+
+    <p>You just finished Year 1. The principle for what's left: <strong>front-load fundamentals → build breadth and find your lean → specialize and land a real internship → convert.</strong></p>
+
+    <div class="timeline">
+
+      <div class="tl now">
+        <div class="when"><span class="nowtag">You are here</span> Summer 2026 · the foundation sprint</div>
+        <h3>The single biggest block of free time you'll get</h3>
+        <ul>
+          <li><strong>Weeks 1–2:</strong> Python fluency + Git as a daily habit. Public GitHub live; commit everything.</li>
+          <li><strong>Weeks 3–7:</strong> Build one real, deployed, public project you actually want to exist — your portfolio site is a great v1.</li>
+          <li><strong>Make it a sampler:</strong> give it a web front (build), one AI feature like a RAG chatbot over your own notes (AI-systems), and one piece written low-level by hand (systems). Notice what you lose track of time doing — that's your data.</li>
+          <li><strong>Light throughout:</strong> 2–3 algorithm problems a week, AI off, just to stay warm.</li>
+        </ul>
+      </div>
+
+      <div class="tl">
+        <div class="when">Year 2 · 2026–27 · builder muscle + breadth</div>
+        <h3>Ship more, dig deeper, find your lean</h3>
+        <ul>
+          <li>Two or three progressively bigger shipped projects — each adds a layer: auth, a real database, an external API, a deploy pipeline.</li>
+          <li>Deepen fundamentals alongside coursework (DBMS, OS, networks are in your syllabus — align effort with grades).</li>
+          <li>Start AI-systems literacy properly: build something agentic; learn to verify and push back on the model.</li>
+          <li>First internship hunt — even a small or unpaid one. The goal is one real team experience before the big one.</li>
+        </ul>
+      </div>
+
+      <div class="tl">
+        <div class="when">Year 3 · 2027–28 · specialize + the big internship</div>
+        <h3>Pick a direction and go deep</h3>
+        <ul>
+          <li>Choose a lean from what Years 1–2 revealed: product / full-stack, applied-AI / ML engineering, or systems / cloud / security.</li>
+          <li>One substantial portfolio project that looks like real work, not a tutorial.</li>
+          <li><strong>The pre-final-year summer internship is the most important career event of the degree</strong> — it's the one that tends to convert into a full-time offer. Aim at a place that builds real product; treat everything before it as positioning.</li>
+          <li>Ramp up interview prep (DSA + system design) ahead of placement season.</li>
+        </ul>
+      </div>
+
+      <div class="tl">
+        <div class="when">Year 4 · 2028–29 · convert</div>
+        <h3>Turn three years into an offer</h3>
+        <ul>
+          <li>Placement season opens early in the final year — interview prep peaks now.</li>
+          <li>Convert the internship to a full-time offer if you can; run off-campus and referral applications in parallel (a strong GitHub and open-source contributions are the currency here).</li>
+          <li>A capstone that doubles as your portfolio centerpiece.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== 06 HABITS ===================== -->
+  <section class="page section">
+    <div class="sec-head">
+      <div class="sec-num">07</div>
+      <div class="sec-title"><h2>Habits that keep you sharp</h2><div class="sub">How to use AI without going soft.</div></div>
+    </div>
+
+    <p>AI can make you faster or it can quietly make you weaker — the difference is entirely in <em>how</em> you use it. Three habits worth building now:</p>
+
+    <div class="callout">
+      <span class="ctag">Habit 01 · One AI-free day a week</span>
+      <p>Pick a day. Write from scratch, read the full error messages, use the actual documentation. This is the gym day that keeps the muscle from atrophying. Students who leaned fully on AI scored noticeably lower on understanding their own code.</p>
+    </div>
+    <div class="callout sage">
+      <span class="ctag">Habit 02 · AI as a tutor, not a vending machine</span>
+      <p>Don't just ask it for the answer — ask it to <em>explain</em> the code line by line, to show you two alternatives and the trade-offs, to quiz you. The students who used AI this way <em>outperformed</em>. Same tool, used to build a brain instead of rent one.</p>
+    </div>
+    <div class="callout gold">
+      <span class="ctag">Habit 03 · Debug it yourself first</span>
+      <p>When AI-generated code breaks — and it will — sit with the bug and find it yourself <em>before</em> asking the AI to fix it. Debugging other people's (and AI's) code is one of the most durable, hardest-to-automate skills you can own.</p>
+    </div>
+  </section>
+
+  <!-- ===================== 07 FIRST WEEK ===================== -->
+  <section class="page section">
+    <div class="sec-head">
+      <div class="sec-num">08</div>
+      <div class="sec-title"><h2>Your first week</h2><div class="sub">Stop reading. Start tomorrow.</div></div>
+    </div>
+
+    <p>Momentum beats planning. Here's a concrete first week — small enough to actually finish, real enough to matter.</p>
+
+    <ul class="checklist">
+      <li><div><span class="ct">Create your GitHub account and make it public.</span> <span class="cd">Real photo, one-line bio — your storefront for the next decade. Then claim the Student Pack (Section 05).</span></div></li>
+      <li><div><span class="ct">Install Git; learn the daily loop.</span> <span class="cd">status, add, commit, push, pull — that's enough to start. Commit something today.</span></div></li>
+      <li><div><span class="ct">Spin up the v1 portfolio site.</span> <span class="cd">Even one page with your name. Deploy it free (GitHub Pages / Vercel) so it's live on the internet by Friday.</span></div></li>
+      <li><div><span class="ct">Push it to GitHub — and keep pushing.</span> <span class="cd">Every change, a commit. The goal this week is the loop, not the polish.</span></div></li>
+      <li><div><span class="ct">Solve two algorithm problems by hand.</span> <span class="cd">AI off. Easy ones. Just to feel the difference between reading and thinking.</span></div></li>
+      <li><div><span class="ct">Write down what you'd love to build.</span> <span class="cd">Anything. That note becomes your Weeks 3–7 project — the one that tells you what you actually enjoy.</span></div></li>
+    </ul>
+
+  </section>
+
+  <!-- ===================== CLOSING ===================== -->
+  <section class="page section">
+    <div class="endmark">· · ·</div>
+
+    <div class="closing" style="max-width:36rem;margin:0 auto;">
+      <p style="font-family:var(--display);font-style:italic;font-size:1.45rem;color:var(--ink);line-height:1.4;">The tools will change every year you're in college. The engineer who can build real things, understand them deeply, and use AI with judgment instead of dependence — that one ages well. Be that one.</p>
+      <div class="sig">— made for you, Harshit, with a lot of belief in you.</div>
+      <p class="small faint" style="margin-top:2.5rem;">Built June 2026. The ideas here are meant to last; the specific tools and links will drift — swap them as they change.</p>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>
