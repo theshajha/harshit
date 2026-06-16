@@ -1,28 +1,40 @@
 # 🧩 Track 03 — Problem-Solving (LeetCode · Python + Java)
 
-Goal: learn **how to think through a problem** — the muscle AI can't replace. This isn't about grinding 500 problems; it's about doing fewer, *well*.
+A **self-contained reference for *how to think*** — the muscle AI can't replace. This track is less about syntax and more about a method and a handful of patterns that cover most problems you'll meet.
 
-## How to practice (this matters more than which problems)
-1. **Think first, AI off.** Give every problem an honest 20–30 minutes before looking anything up.
-2. **Stuck?** Read the *idea / approach* — not the full solution — then close it and **re-code it yourself**.
-3. **Two languages, on purpose:** solve in **Python** first (clean to think in), then **translate to Java**. The logic stays the same; you learn how each language expresses it.
-4. **After solving**, ask AI: *"what's a cleaner or faster way?"* — then learn that pattern.
+Two layers:
+- **The notes (`notes/`) = the *thinking*.** The method, Big-O, and the core patterns — in plain words, with templates.
+- **Solving problems = the *doing*.** You build this muscle by solving, not reading. The notes give you the approach; LeetCode/NeetCode is the gym.
 
-## Don't random-grind — follow patterns
-- **NeetCode (roadmap + clear explanations)** — the best-ordered path → <https://neetcode.io>
-- **LeetCode** itself → <https://leetcode.com> *(start with the Easy set or "Top Interview 150")*
+> The practice ground: **NeetCode** (best-ordered) → <https://neetcode.io> · **LeetCode** → <https://leetcode.com>
 
-## Starter set — Easy first, Python then Java
-- [ ] Two Sum
-- [ ] Valid Parentheses
-- [ ] Contains Duplicate
-- [ ] Best Time to Buy and Sell Stock
-- [ ] Valid Palindrome
-- [ ] Merge Two Sorted Lists
-- [ ] → then begin the **NeetCode roadmap**, starting with *Arrays & Hashing*
+---
+
+## How to use this track
+1. **Read note 00 (the method) once** — it's the most important thing here.
+2. Skim **01 (Big-O)** and **02 (the pattern catalog)**.
+3. As you hit each pattern on NeetCode, **read its note**, then **solve 3–5 problems** of that type.
+4. **Fill the note's `✍️ Your turn`** — the pattern in your words + a problem you solved.
+
+**The golden rule:** every problem gets an honest 20–30 min, **AI off**, before you look anything up. Stuck? Read the *idea*, then re-code it yourself.
+
+## The notes
+
+| # | Topic | Status |
+|---|-------|--------|
+| 00 | [How to solve any problem](notes/00-how-to-solve-a-problem.md) | ✍️ written |
+| 01 | [Big-O notation (complexity)](notes/01-big-o.md) | ✍️ written |
+| 02 | [The pattern catalog](notes/02-pattern-catalog.md) | ✍️ written |
+| 03 | [Arrays & Hashing](notes/03-arrays-and-hashing.md) | 🌱 your turn |
+| 04 | [Two Pointers](notes/04-two-pointers.md) | 🌱 your turn |
+| 05 | [Sliding Window](notes/05-sliding-window.md) | 🌱 your turn |
+| 06 | [Stack](notes/06-stack.md) | 🌱 your turn |
+| 07 | [Binary Search](notes/07-binary-search.md) | 🌱 your turn |
+
+*(More patterns — linked lists, trees, graphs, DP — get added as you reach them.)*
+
+## Two languages, on purpose
+Solve in **Python** first (clean to think in), then translate to **Java**. The logic stays; you learn how each expresses it. As problems get harder, it's fine to lead in Python and only translate the ones worth reinforcing.
 
 ## Keep a log
-Put your solutions in `projects/leetcode/` — one folder per problem, with your **Python and Java** versions. Commit each one. Re-reading your old solutions is how you start to *see the patterns*.
-
-## A realistic note
-Doing every problem in **both** languages is more work — totally fine while they're Easy. As they get harder, it's okay to **lead in Python** and only translate the ones worth reinforcing in Java.
+Solutions go in `projects/leetcode/` — one folder per problem, Python + Java. Commit each. Re-reading old solutions is how you start to *see* the patterns.
